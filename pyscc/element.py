@@ -644,7 +644,7 @@ def component_group(ref):
     :Description: Wrapper for component element groups.
     :return: Resource
     """
-    def fmt(self, **kwargs): # pylint: disable=missing-docstring
+    def fmt(self, **kwargs):  # pylint: disable=missing-docstring
         # pylint: disable=C0103, W0212
         for element in self.__group__:
             el = getattr(self, element)
@@ -653,12 +653,12 @@ def component_group(ref):
         return self
 
     @property
-    def wrapper(self): # pylint: disable=missing-docstring
+    def wrapper(self):  # pylint: disable=missing-docstring
         cgrp = ref(self)
         group = Resource(**{element: Element(self.controller, (cgrp.get('_') + ' ' + selector) if \
             cgrp.get('_') else selector) for element, selector in iteritems(cgrp) \
             if selector != '_'})
-        group.__group__ = [element for element, _ in iteritems(cgrp)]
+        group.__group__ = [element for element, _ in iteritems(cgrp) if element != '_']
         group.fmt = MethodType(fmt, group)
         group.check = CheckGroup(group)
         return group
