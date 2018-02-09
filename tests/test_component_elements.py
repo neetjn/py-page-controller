@@ -24,12 +24,13 @@ class TestElement(BaseTest):
 
     def test_element_group(self):
         """test element groups are generated as intended"""
-        self.assertIsInstance(self.social_buttons, Resource)
-        expected_attributes = ('twitter', 'github', 'linkedin')
-        self.assertTrue(all(item in expected_attributes for item in self.social_buttons.__group__))
+        self.assertIsInstance(self.task_group, Resource)
+        expected_attributes = ('desc', 'assignee', 'created')
+        self.assertTrue(all(item in expected_attributes for item in self.task_group.__group__))
+        self.assertFalse('_' in self.task_group.__group__)
         for sb in expected_attributes:
-            self.assertTrue(hasattr(self.social_buttons, sb))
-            self.assertIsInstance(getattr(self.social_buttons, sb), Element)
+            self.assertTrue(hasattr(self.task_group, sb))
+            self.assertIsInstance(getattr(self.task_group, sb), Element)
 
     def test_element_group_checks(self):
         """test element group checks work as intended"""
@@ -167,7 +168,7 @@ class TestElement(BaseTest):
         for task in self.tasks.text():
             self.assertIn('2017', task)
         for task in self.tasks.text(raw=True):
-            self.assertIn('r-sref="/profile/', task)
+            self.assertIn('href="/#!/profile/', task)
 
     def test_elements_wrapper_attributes(self):
         """test elements wrapper attribute aggregation and specification"""
